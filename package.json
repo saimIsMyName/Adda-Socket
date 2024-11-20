@@ -1,0 +1,21 @@
+{
+  "name": "adda-socket",
+  "version": "1.0.0",
+  "description": "Backend For Adda - CWS ( A CHAT APP BUILT WITH NEXTJS )",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "Saiful Islam Saim",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "socket.io": "^4.7.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

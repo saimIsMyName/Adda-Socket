@@ -14,7 +14,7 @@ const server = app.listen(
 const io = require("socket.io")(server, {
   pingTimeout: 60000,
   cors: {
-    origin: process.env.ORIGIN
+    origin: [process.env.ORIGIN, process.env.ORIGIN_DEV],
   },
 });
 

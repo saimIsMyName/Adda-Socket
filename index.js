@@ -6,27 +6,28 @@ app.get("/", (req, res) => {
   res.send("Server is ready for ADDA !");
 });
 
-const server = app.listen(
-  PORT,
-  console.log(`Server Running on PORT ${PORT}...`)
-);
+const server = app.listen(PORT, () => {
+  if (!PORT) {
+    console.log("PORT is not defined. Default PORT is 8080");
+  } else {
+    console.log(`Server Running on PORT ${PORT}...`);
+  }
+});
 
 const io = require("socket.io")(server, {
   pingTimeout: 60000,
   cors: {
-    origin: [process.env.ORIGIN, process.env.ORIGIN_DEV],
+    origin: [process.env.ORIGIN_PROD, process.env.ORIGIN_DEV],
   },
 });
 
 io.on("connection", (socket) => {
   socket.on("setup", (userData) => {
     socket.join(userData._id);
-    socket.emit("connected");
-    console.log("socket connected");
+    socket.emit("Socket Connected");
   });
 
   socket.on("join chat", (room) => {
-    console.log("join chat", room);
     socket.join(room);
   });
 
@@ -35,7 +36,6 @@ io.on("connection", (socket) => {
     chat.users.forEach((user) => {
       if (user._id == newMessageRecieved.sender._id) return;
       socket.in(user._id).emit("message recieved", newMessageRecieved);
-      console.log("message recieved", newMessageRecieved);
     });
   });
 

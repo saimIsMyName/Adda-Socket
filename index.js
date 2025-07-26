@@ -22,9 +22,11 @@ io.on("connection", (socket) => {
   socket.on("setup", (userData) => {
     socket.join(userData._id);
     socket.emit("connected");
+    console.log("socket connected");
   });
 
   socket.on("join chat", (room) => {
+    console.log("join chat", room);
     socket.join(room);
   });
 
@@ -33,10 +35,12 @@ io.on("connection", (socket) => {
     chat.users.forEach((user) => {
       if (user._id == newMessageRecieved.sender._id) return;
       socket.in(user._id).emit("message recieved", newMessageRecieved);
+      console.log("message recieved", newMessageRecieved);
     });
   });
 
   socket.off("setup", () => {
     socket.leave(userData._id);
+    console.log("socket disconnected");
   });
 });

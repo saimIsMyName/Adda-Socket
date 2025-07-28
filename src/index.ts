@@ -65,11 +65,11 @@ io.on("connection", (socket) => {
     }
 
     const chat = newMessageReceived.chat;
-
+    
     chat.users.forEach((user: ChatUser) => {
       // Don't send message back to sender
       if (user._id === newMessageReceived.sender._id) return;
-
+      
       socket.in(user._id).emit("message received", newMessageReceived);
     });
   });
@@ -80,10 +80,10 @@ io.on("connection", (socket) => {
   });
 
   // Handle setup cleanup
-  socket.on("setup", (userData: UserData) => {
-    socket.leave(userData._id);
-    console.log("Socket disconnected and left room:", userData._id);
-  });
+  // socket.on("setup", (userData: UserData) => {
+  //   socket.leave(userData._id);
+  //   console.log("Socket disconnected and left room:", userData._id);
+  // });
 });
 
 // Start server
